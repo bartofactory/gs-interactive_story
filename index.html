@@ -40,19 +40,10 @@
     </div>
   </div>
 
-  <div id="portrait" class="hidden">
-    Routa il dispositivo merda!
-  </div>
-
   <script src="https://vjs.zencdn.net/7.8.4/video.js"></script>
   <script src="js/functions.js"></script>
   <script src="js/decisionTree.js"></script>
   <script>
-    orientationBehaviour()
-    window.addEventListener("orientationchange", function(event){
-      orientationBehaviour()
-    });
-
     var video = videojs('videoPlayer')
     var player = undefined
     
