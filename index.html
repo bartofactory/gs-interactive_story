@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GS Interactive Story</title>
+
+    <link href="https://vjs.zencdn.net/7.8.4/video-js.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- If you'd like to support IE8 (for Video.js versions prior to v7) -->
+    <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
+</head>
+<body>
+  <div id="wrapper">
+    <video-js
+      id="videoPlayer"
+      class="video-js vjs-default-skin vjs-big-play-centered"
+      preload="auto"
+      controls
+      data-setup="{}"
+    >
+      <p class="vjs-no-js">
+        To view this video please enable JavaScript, and consider upgrading to a
+        web browser that
+        <a href="https://videojs.com/html5-video-support/" target="_blank"
+          >supports HTML5 video</a
+        >
+      </p>
+    </video-js>
+
+    <div id="overlay" class="hidden">
+      <div class="content">
+        <span class="title">## TITLE ##</span>
+        <div class="selection">
+          <button>## OPZ. 1 ##</button>
+          <button>## OPZ. 2 ##</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="portrait" class="hidden">
+    Routa il dispositivo merda!
+  </div>
+
+  <script src="https://vjs.zencdn.net/7.8.4/video.js"></script>
+  <script src="js/functions.js"></script>
+  <script src="js/decisionTree.js"></script>
+  <script>
+    orientationBehaviour()
+    window.addEventListener("orientationchange", function(event){
+      orientationBehaviour()
+    });
+
+    var video = videojs('videoPlayer')
+    var player = undefined
+    
+    video.ready(function(){
+      player = this;
+
+      player.src({
+        type: 'video/mp4',
+        src: decisionTree.video
+      })
+
+      player.on('ended', function() {
+        if(decisionTree.choices !== undefined){
+          document.querySelector("#wrapper #overlay .content .selection").innerHTML = ''
+          document.querySelector("#wrapper #overlay .content .title").innerHTML = decisionTree.question
+            decisionTree.choices.forEach(choice => {
+              var btn = document.createElement("button");
+              btn.innerHTML = choice.name;
+              btn.onclick = function(){
+                decisionTree = choice
+                playVideoSource(player, choice.video);
+              }
+              document.querySelector("#wrapper #overlay .content .selection").appendChild(btn);
+            });
+          showOverlay()
+        }
+      });
+    });
+  </script>
+</body>
+</html>
