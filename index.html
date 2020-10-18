@@ -7,6 +7,7 @@
 
     <link href="https://vjs.zencdn.net/7.8.4/video-js.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
 
     <!-- If you'd like to support IE8 (for Video.js versions prior to v7) -->
     <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
@@ -43,35 +44,6 @@
   <script src="https://vjs.zencdn.net/7.8.4/video.js"></script>
   <script src="js/functions.js"></script>
   <script src="js/decisionTree.js"></script>
-  <script>
-    var video = videojs('videoPlayer')
-    var player = undefined
-    
-    video.ready(function(){
-      player = this;
-
-      player.src({
-        type: 'video/mp4',
-        src: decisionTree.video
-      })
-
-      player.on('ended', function() {
-        if(decisionTree.choices !== undefined){
-          document.querySelector("#wrapper #overlay .content .selection").innerHTML = ''
-          document.querySelector("#wrapper #overlay .content .title").innerHTML = decisionTree.question
-            decisionTree.choices.forEach(choice => {
-              var btn = document.createElement("button");
-              btn.innerHTML = choice.name;
-              btn.onclick = function(){
-                decisionTree = choice
-                playVideoSource(player, choice.video);
-              }
-              document.querySelector("#wrapper #overlay .content .selection").appendChild(btn);
-            });
-          showOverlay()
-        }
-      });
-    });
-  </script>
+  <script src="js/logic.js"></script>
 </body>
 </html>
